@@ -71,5 +71,8 @@ func serverContext(ctx context.Context) context.Context {
 func (s *Server) registerRoutes() {
 	// User Routes
 	uh := web.NewUserHandler(s.app.UserService)
-	s.engine.POST("/user/sigin", uh.SignInHandler())
+	s.engine.POST("/user/sigin", func(c echo.Context) error {
+		uh.Ctx = c
+		return uh.SignInHandler()
+	})
 }
