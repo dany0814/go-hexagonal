@@ -3,9 +3,9 @@ package repository
 import (
 	"context"
 
-	mysqldb "github.com/dany0814/go-hexagonal/internal/platform/storage/mysql"
+	"github.com/dany0814/go-hexagonal/internal/core/domain"
 )
 
 type UserRepository interface {
-	Save(ctx context.Context, sqluser mysqldb.SqlUser) error
+	Save(ctx context.Context, sqluser domain.User) error
 }

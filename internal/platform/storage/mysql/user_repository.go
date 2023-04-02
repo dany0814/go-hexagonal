@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/dany0814/go-hexagonal/internal/core/domain"
 	"github.com/huandu/go-sqlbuilder"
 )
 
@@ -23,14 +24,14 @@ func NewUserRepository(db *sql.DB, dbTimeout time.Duration) *UserRepository {
 }
 
 // Save implements the adapter userRepository interface.
-func (r *UserRepository) Save(ctx context.Context, user SqlUser) error {
+func (r *UserRepository) Save(ctx context.Context, user domain.User) error {
 	userSQLStruct := sqlbuilder.NewStruct(new(SqlUser))
 	query, args := userSQLStruct.InsertInto(sqlUserTable, SqlUser{
-		ID:        user.ID,
+		ID:        user.ID.String(),
 		Name:      user.Name,
 		Lastname:  user.Lastname,
-		Email:     user.Email,
-		Password:  user.Password,
+		Email:     user.Email.String(),
+		Password:  user.Password.String(),
 		CreatedAt: user.CreatedAt,
 		UpdatedAt: user.UpdatedAt,
 		DeletedAt: user.DeletedAt,
