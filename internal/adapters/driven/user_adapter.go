@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/dany0814/go-hexagonal/internal/adapters/driven/repository"
-	"github.com/dany0814/go-hexagonal/internal/core/application/dto"
 	"github.com/dany0814/go-hexagonal/internal/core/domain"
 	mysqldb "github.com/dany0814/go-hexagonal/internal/platform/storage/mysql"
 )
@@ -26,22 +25,9 @@ func (uadpt UserAdapter) Create(ctx context.Context, user domain.User) error {
 		Lastname:  user.Lastname,
 		Email:     user.Email.String(),
 		Password:  user.Password.String(),
-		Dni:       user.Dni.String(),
-		Phone:     user.Phone,
-		State:     user.State,
 		CreatedAt: user.CreatedAt,
 		UpdatedAt: user.UpdatedAt,
 		DeletedAt: user.DeletedAt,
 	}
 	return uadpt.userRepository.Save(ctx, sqlUser)
-}
-
-func (uadpt UserAdapter) FindAll(ctx context.Context) ([]*dto.User, error) {
-	listUser, err := uadpt.userRepository.FindAll(ctx)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return listUser, nil
 }

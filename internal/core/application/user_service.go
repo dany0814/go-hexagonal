@@ -24,7 +24,7 @@ func NewUserService(userDB outdb.UserDB) UserService {
 func (usrv UserService) Register(ctx context.Context, user dto.User) (*dto.User, error) {
 	id := uidgen.New().New()
 
-	newuser, err := domain.NewUser(id, user.Name, user.Lastname, user.Email, user.Password, user.Dni, user.Phone, "Active")
+	newuser, err := domain.NewUser(id, user.Name, user.Lastname, user.Email, user.Password)
 
 	if err != nil {
 		return nil, err

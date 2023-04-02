@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/dany0814/go-hexagonal/internal/core/application/dto"
 	"github.com/huandu/go-sqlbuilder"
 )
 
@@ -32,9 +31,6 @@ func (r *UserRepository) Save(ctx context.Context, user SqlUser) error {
 		Lastname:  user.Lastname,
 		Email:     user.Email,
 		Password:  user.Password,
-		Phone:     user.Phone,
-		Dni:       user.Dni,
-		State:     user.State,
 		CreatedAt: user.CreatedAt,
 		UpdatedAt: user.UpdatedAt,
 		DeletedAt: user.DeletedAt,
@@ -46,41 +42,4 @@ func (r *UserRepository) Save(ctx context.Context, user SqlUser) error {
 	}
 
 	return nil
-}
-
-func (r *UserRepository) FindAll(ctx context.Context) ([]*dto.User, error) {
-	var allUser []*dto.User
-
-	userSQLStruct := sqlbuilder.NewStruct(new(SqlUser))
-	query := userSQLStruct.SelectFrom(sqlUserTable)
-	results, err := r.db.Query(query.String())
-
-	if err != nil {
-		return nil, err
-	}
-
-	defer results.Close()
-
-	for results.Next() {
-		var sqlUser SqlUser
-		if err := results.Scan(
-			&sqlUser.ID,
-			&sqlUser.Name,
-			&sqlUser.Lastname,
-			&sqlUser.Email,
-			&sqlUser.Password,
-			&sqlUser.Dni,
-			&sqlUser.Phone,
-			&sqlUser.State,
-			&sqlUser.CreatedAt,
-			&sqlUser.UpdatedAt,
-			&sqlUser.DeletedAt,
-		); err != nil {
-			return nil, err
-		}
-		sqlUser.Password = ""
-		user := dto.User(sqlUser)
-		allUser = append(allUser, &user)
-	}
-	return allUser, nil
 }

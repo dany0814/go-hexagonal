@@ -77,23 +77,6 @@ func (pass UserPassword) String() string {
 
 // NewUserUsername function to instantiate the initial value for UserUsername
 
-type UserDni struct {
-	value string
-}
-
-func NewUserDni(value string) (UserDni, error) {
-	if value == "" {
-		return UserDni{}, fmt.Errorf("%w: %s", ErrEmptyUserUsername, value)
-	}
-	return UserDni{
-		value: value,
-	}, nil
-}
-
-func (usrname UserDni) String() string {
-	return usrname.value
-}
-
 // NewUser function to instantiate the initial value for User
 
 type User struct {
@@ -102,15 +85,12 @@ type User struct {
 	Lastname  string
 	Email     UserEmail
 	Password  UserPassword
-	Phone     string
-	Dni       UserDni
-	State     string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt *time.Time
 }
 
-func NewUser(userID, name, lastname, email, password, dni, phone, state string) (User, error) {
+func NewUser(userID, name, lastname, email, password string) (User, error) {
 	idVo, err := NewUserID(userID)
 	if err != nil {
 		return User{}, err
@@ -130,20 +110,12 @@ func NewUser(userID, name, lastname, email, password, dni, phone, state string) 
 		return User{}, err
 	}
 
-	userDniVo, err := NewUserDni(dni)
-	if err != nil {
-		return User{}, err
-	}
-
 	return User{
 		ID:       idVo,
 		Name:     name,
 		Lastname: lastname,
 		Email:    emailVo,
 		Password: passwordVo,
-		Phone:    phone,
-		Dni:      userDniVo,
-		State:    state,
 	}, nil
 }
 
