@@ -6,7 +6,7 @@ import (
 
 	"github.com/dany0814/go-hexagonal/internal/core/application/dto"
 	"github.com/dany0814/go-hexagonal/internal/core/domain"
-	outdb "github.com/dany0814/go-hexagonal/internal/core/ports/outgoing"
+	outdb "github.com/dany0814/go-hexagonal/internal/core/ports/driven"
 	"github.com/dany0814/go-hexagonal/pkg/encryption"
 	"github.com/dany0814/go-hexagonal/pkg/uidgen"
 )
@@ -50,12 +50,4 @@ func (usrv UserService) Register(ctx context.Context, user dto.User) (*dto.User,
 
 	user.ID = id
 	return &user, nil
-}
-
-func (usrv UserService) GetAllUser(ctx context.Context) ([]*dto.User, error) {
-	list, err := usrv.userDB.FindAll(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return list, nil
 }

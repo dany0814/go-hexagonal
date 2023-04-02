@@ -9,7 +9,7 @@ import (
 	"os/signal"
 	"time"
 
-	web "github.com/dany0814/go-hexagonal/internal/core/adapters/incoming"
+	web "github.com/dany0814/go-hexagonal/internal/adapters/driver"
 	"github.com/dany0814/go-hexagonal/internal/core/application"
 	"github.com/labstack/echo/v4"
 )
@@ -72,5 +72,4 @@ func (s *Server) registerRoutes() {
 	// Routes user
 	uh := web.NewUserHandler(s.app.UserService)
 	s.engine.POST("/user/sigin", uh.SignInHandler())
-	s.engine.GET("/users", uh.GetAllUserHandler())
 }

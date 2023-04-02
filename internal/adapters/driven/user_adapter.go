@@ -1,9 +1,9 @@
-package database
+package drivenadapt
 
 import (
 	"context"
 
-	"github.com/dany0814/go-hexagonal/internal/core/adapters/outgoing/repository"
+	"github.com/dany0814/go-hexagonal/internal/adapters/driven/repository"
 	"github.com/dany0814/go-hexagonal/internal/core/application/dto"
 	"github.com/dany0814/go-hexagonal/internal/core/domain"
 	mysqldb "github.com/dany0814/go-hexagonal/internal/platform/storage/mysql"

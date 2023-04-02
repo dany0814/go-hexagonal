@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	database "github.com/dany0814/go-hexagonal/internal/core/adapters/outgoing"
+	database "github.com/dany0814/go-hexagonal/internal/adapters/driven"
 	"github.com/dany0814/go-hexagonal/internal/core/application"
 	"github.com/dany0814/go-hexagonal/internal/platform/server"
 	mysqldb "github.com/dany0814/go-hexagonal/internal/platform/storage/mysql"

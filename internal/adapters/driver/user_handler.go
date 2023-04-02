@@ -1,4 +1,4 @@
-package web
+package driveradapt
 
 import (
 	"errors"
@@ -42,20 +42,6 @@ func (usrh UserHandler) SignInHandler() echo.HandlerFunc {
 			}
 		}
 		ctx.JSON(http.StatusCreated, helpers.DataResponse(0, "User created", res))
-		return nil
-	}
-}
-
-func (usrh UserHandler) GetAllUserHandler() echo.HandlerFunc {
-	return func(ctx echo.Context) error {
-		res, err := usrh.userService.GetAllUser(ctx.Request().Context())
-
-		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, err.Error())
-			return nil
-		}
-
-		ctx.JSON(http.StatusCreated, helpers.DataResponse(0, "All users", res))
 		return nil
 	}
 }
