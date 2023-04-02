@@ -7,7 +7,6 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/huandu/go-sqlbuilder v1.20.0
 	github.com/kelseyhightower/envconfig v1.4.0
-	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/echo/v4 v4.10.2
 	golang.org/x/crypto v0.6.0
 )
