@@ -14,7 +14,6 @@ var ErrInvalidUserID = errors.New("invalid User ID")
 var ErrInvalidUserEmail = errors.New("invalid Email")
 var ErrInvalidUserPassword = errors.New("invalid Password")
 var ErrEmptyName = errors.New("the field name is required")
-var ErrEmptyUserUsername = errors.New("the field Username is required")
 
 // NewUserID function to instantiate the initial value for UserID
 

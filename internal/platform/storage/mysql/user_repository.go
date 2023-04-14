@@ -15,7 +15,7 @@ type UserRepository struct {
 	dbTimeout time.Duration
 }
 
-// NewCourseRepository initializes a MySQL-based implementation of mooc.CourseRepository.
+// NewUserRepository initializes a MySQL-based implementation of UserRepository.
 func NewUserRepository(db *sql.DB, dbTimeout time.Duration) *UserRepository {
 	return &UserRepository{
 		db:        db,
