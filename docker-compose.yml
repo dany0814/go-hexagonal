@@ -1,18 +1,16 @@
 version: '3.8'
 services:
-  mysql:
-    image: mysql:8.0
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=enviadoc
-      - MYSQL_USER=enviadoc
-      - MYSQL_PASSWORD=enviadoc
-      - MYSQL_DATABASE=enviadoc
+  database:
+    container_name: database_pg
+    image: postgres:14.3-alpine3.15
+    restart: unless-stopped
+    tty: true
+    env_file:
+      - .env
     ports:
-      - '3306:3306'
+      - '5434:5432'
     volumes:
-      - db:/var/lib/mysql
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/pgdata:/var/lib/postgresql/data
 volumes:
-  db:
+  pgdata:
     driver: local
