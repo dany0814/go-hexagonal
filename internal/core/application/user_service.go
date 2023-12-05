@@ -2,6 +2,7 @@ package application
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/dany0814/go-hexagonal/internal/core/application/dto"
@@ -42,6 +43,7 @@ func (usrv UserService) Register(ctx context.Context, user dto.User) (*dto.User,
 	newuser.CreatedAt = time.Now()
 	newuser.UpdatedAt = time.Now()
 
+	fmt.Println("user app core: ", newuser)
 	err = usrv.userDB.Create(ctx, newuser)
 
 	if err != nil {

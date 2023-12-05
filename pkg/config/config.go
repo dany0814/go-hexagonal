@@ -2,12 +2,15 @@ package config
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
+	"log"
 	"time"
 
+	mysqldb "github.com/dany0814/go-hexagonal/internal/platform/storage/mysql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/kelseyhightower/envconfig"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 type config struct {
@@ -37,24 +40,36 @@ func LoadConfig() error {
 	return nil
 }
 
-func ConfigDb(ctx context.Context) (*sql.DB, error) {
-	mysqlURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", Cfg.DbUser, Cfg.DbPass, Cfg.DbHost, Cfg.DbPort, Cfg.DbName)
-	fmt.Println("uri: ", mysqlURI)
-	db, err := sql.Open("mysql", mysqlURI)
+func ConfigDb(ctx context.Context) (*gorm.DB, error) {
+	// mysqlURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", Cfg.DbUser, Cfg.DbPass, Cfg.DbHost, Cfg.DbPort, Cfg.DbName)
+	// fmt.Println("uri: ", mysqlURI)
+	// db, err := sql.Open("mysql", mysqlURI)
+	// if err != nil {
+	// 	fmt.Println("Failed database connection")
+	// 	panic(err)
+	// }
+
+	// fmt.Println("Successfully Connected to MySQL database")
+
+	// db.SetConnMaxLifetime(time.Minute * 4)
+	// db.SetMaxOpenConns(10)
+	// db.SetMaxIdleConns(10)
+
+	// err = db.Ping()
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// return db, nil
+	dbURL := "postgres://postgres:postgres@localhost:5434/db_auth"
+
+	db, err := gorm.Open(postgres.Open(dbURL), &gorm.Config{})
+
 	if err != nil {
-		fmt.Println("Failed database connection")
-		panic(err)
+		fmt.Println("Error al conectarse a la base de datos pg")
+		log.Fatalln(err)
 	}
 
-	fmt.Println("Successfully Connected to MySQL database")
+	db.AutoMigrate(&mysqldb.Book{})
 
-	db.SetConnMaxLifetime(time.Minute * 4)
-	db.SetMaxOpenConns(10)
-	db.SetMaxIdleConns(10)
-
-	err = db.Ping()
-	if err != nil {
-		return nil, err
-	}
 	return db, nil
 }

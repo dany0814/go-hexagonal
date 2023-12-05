@@ -2,6 +2,7 @@ package driveradapt
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/dany0814/go-hexagonal/internal/core/application"
@@ -30,6 +31,7 @@ func (usrh UserHandler) SignInHandler() error {
 		ctx.JSON(http.StatusBadRequest, err.Error())
 		return nil
 	}
+	fmt.Println("Data enviada: ", req)
 	res, err := usrh.userService.Register(ctx.Request().Context(), req)
 
 	if err != nil {
